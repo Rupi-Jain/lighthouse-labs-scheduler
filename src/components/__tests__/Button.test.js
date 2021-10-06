@@ -46,9 +46,10 @@ it.skip("renders a clickable button", () => {
 it.skip("renders a disabled button", () => {
   const handleClick = jest.fn();
   const { getByText } = render(
-    <Button disabled onClick={handleClick}>
+    <Button disabled onClick={action("button-clicked")}>
       Disabled
     </Button>
+
   );
 
   const button = getByText("Disabled");
