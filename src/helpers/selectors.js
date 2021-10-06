@@ -1,4 +1,8 @@
-
+export function findDays(days, id) {
+  for(let day of days) {
+    
+  }
+}
 export function getInterview(state, interview) {
   //console.log("state", state, "interviewSELECTOR", interview)
   if(!interview) {

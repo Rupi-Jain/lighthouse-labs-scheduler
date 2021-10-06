@@ -28,10 +28,10 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  console.log("interview", props.interview, "mode:", mode)
+  //console.log("interview", props.interview, "mode:", mode)
   
   function saveHandle(name, interviewer) {
-    console.log("day", props.day);
+    //console.log("day", props.day);
     const interview = {
       student: name,
       interviewer: interviewer.id
@@ -39,6 +39,7 @@ export default function Appointment(props) {
     transition(SAVING);
     props
       .bookInterview(props.id, interview)
+     // .then(() => props.updateSpots(props.day))
       .then(() => transition(SHOW))
       .catch(error => transition(ERROR_SAVE, true));
       // props.updateSpots(props.day)

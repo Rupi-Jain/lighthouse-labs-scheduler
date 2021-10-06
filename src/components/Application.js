@@ -6,21 +6,22 @@ import useApplicationData  from "hooks/useApplicationData"
 import { getAppointmentsForDay, getInterviewForDay, getInterview} from "helpers/selectors";
 import axios from 'axios';
 
-export default function Application(props) {
- console.log("I am called");
+export default function Application() {
+  
   const {
     state,
     setDay,
     bookInterview,
     cancelInterview,
-    selectDay,
-    updateSpots
+    selectDay
   } = useApplicationData();
+  //console.log("state", state);
 
   const interviewers = getInterviewForDay(state, state.day); 
   const appointments = getAppointmentsForDay(state, state.day);
   const schedule = appointments.map((appointment) => {
   const interview = getInterview(state, appointment.interview);
+  //console.log("interview", interview)
   return (
     <Appointment
       key={appointment.id}
@@ -30,13 +31,11 @@ export default function Application(props) {
       interviewers={interviewers}
       bookInterview={bookInterview}
       cancelInterview={cancelInterview}
-      updateSpots={updateSpots}
-      day={state.day}
     />
   );
 });
 
-
+  console.log("days inside application", state.days)
   return (
     <main className="layout">
       <section className="sidebar">
