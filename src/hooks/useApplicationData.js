@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData(props) {
-  //const [day, setDay] = useState("")
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -39,32 +38,31 @@ export default function useApplicationData(props) {
       interview
     })
     .then(() => {
-      const days = updateSpots(id, appointments);
+      const days = updateSpots(state.day, appointments);
       return setState({ ...state, appointments, days })
      });
   
   }
-  const findDay = (days, id) => {
-    for (let day of days) {
-      for (let appintmentId of day.appointments) {
-        if (appintmentId === id) {
-          return day;
-        }
+  function getDay(days, apptDay) {
+    for(let day of days) {
+      if(day.name === apptDay) {
+        return day;
       }
     }
   }
-  function updateSpots(id, appointments) {
-    const foundDay = findDay(state.days, id);
+  function updateSpots(apptDay, appointments) {
+    const filteredDay = getDay(state.days, apptDay);
+    const appointmentIds = filteredDay.appointments; 
     let remainingSpots = 0;
-    for (let appointmentId of foundDay.appointments) {
-      if (appointments[appointmentId].interview === null) {
-        remainingSpots++;
-      }
+    for (let appointmentId of filteredDay.appointments) {
+    if (appointments[appointmentId].interview === null) {
+      remainingSpots++;
     }
-    foundDay.spots = remainingSpots;
-    const foundDayIndex = state.days.findIndex(day => day.id === foundDay.id);
+    }
+    filteredDay.spots = remainingSpots;
+    const foundDayIndex = state.days.findIndex(day => day.id === filteredDay.id);
     const days = [...state.days];
-    days[foundDayIndex] = foundDay;
+    days[foundDayIndex] = filteredDay;
     return days;
   }
 
@@ -81,7 +79,7 @@ export default function useApplicationData(props) {
       interview
     })
     .then(() => {
-      const days = updateSpots(id, appointments);
+      const days = updateSpots(state.day, appointments);
       return setState({ ...state, appointments, days })
       });
   }
@@ -94,3 +92,5 @@ export default function useApplicationData(props) {
   return { state, bookInterview, cancelInterview, selectDay};
 
 } 
+
+    
