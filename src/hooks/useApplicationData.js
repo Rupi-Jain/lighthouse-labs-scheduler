@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getAppointmentsForDay } from "helpers/selectors";
 
 export default function useApplicationData(props) {
-  const [day, setDay] = useState("")
+  //const [day, setDay] = useState("")
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -11,7 +10,7 @@ export default function useApplicationData(props) {
     interviewers: {},
     interviewer: {}
   });
-  //console.log("Main App", state.appointments, "day:", state.day);
+
   useEffect(() => {
     const one = axios.get("http://localhost:8001/api/days")
     const two = axios.get("http://localhost:8001/api/appointments")
@@ -27,8 +26,6 @@ export default function useApplicationData(props) {
     }, [])
 
   function bookInterview(id, interview) {
-    //console.log("state.appointments[id]", state.appointments[id])
-   // console.log("interview", interview)
     const appointment = {
       ...state.appointments[id],
       interview
@@ -70,30 +67,6 @@ export default function useApplicationData(props) {
     days[foundDayIndex] = foundDay;
     return days;
   }
-// function updateSpots(apptDay, appointments) {
-//      console.log("ready to update", state.days, apptDay);
-//     //const apptDay = state.day
-//     const filteredDay = state.days.filter(dayFound => dayFound.name === apptDay); 
-//     //console.log("fil", filteredDay[0].appointments) 
-//     let remainingSpots = 0;
-//       for (let appointmentId of filteredDay[0].appointments) {
-//         if (appointments[appointmentId].interview === null) {
-//           remainingSpots++;
-//         }
-//       }
-//     const foundDayIndex = state.days.findIndex(day => day.name === apptDay);
-//     const day = {
-//       ...state.days[foundDayIndex],
-//       spots: remainingSpots
-//     }
-//     //setDay({...state.days[foundDayIndex], day});
-//     console.log("day:",day)
-//     const days = {
-//       ...state.days,
-//       [foundDayIndex]: day
-//     };
-//     return days;
-//   }
 
   function cancelInterview(id, interview) {
     const appointment = {
@@ -118,6 +91,6 @@ export default function useApplicationData(props) {
     setState(prev => ({ ...prev, day: selectedDay}));  
   }
 
-  return { state, setDay, bookInterview, cancelInterview, selectDay};
+  return { state, bookInterview, cancelInterview, selectDay};
 
 } 

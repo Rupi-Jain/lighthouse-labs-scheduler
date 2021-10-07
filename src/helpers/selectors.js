@@ -1,10 +1,6 @@
-export function findDays(days, id) {
-  for(let day of days) {
-    
-  }
-}
+
 export function getInterview(state, interview) {
-  //console.log("state", state, "interviewSELECTOR", interview)
+  
   if(!interview) {
     return null
   }
@@ -14,7 +10,6 @@ export function getInterview(state, interview) {
     return null
   }
   const interviewer = Object.assign({}, ...filteredInterviewer);
- // console.log("intervieweeeer", interviewer)
   return {student: interview.student, interviewer: interviewer};
 }
 
@@ -69,5 +64,3 @@ export function getInterviewForDay(state, day) {
 }
 
 
-
-//module.exports = {getAppointmentsForDay, getInterview};
