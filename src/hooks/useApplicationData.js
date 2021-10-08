@@ -61,8 +61,16 @@ export default function useApplicationData(props) {
     }
     filteredDay.spots = remainingSpots;
     const foundDayIndex = state.days.findIndex(day => day.id === filteredDay.id);
-    const days = [...state.days];
-    days[foundDayIndex] = filteredDay;
+   
+    const day = {
+      ...state.days[foundDayIndex],
+      spots: remainingSpots
+    }
+    const days = {
+      ...state.days,
+      [foundDayIndex]: day
+    };
+    
     return days;
   }
 
