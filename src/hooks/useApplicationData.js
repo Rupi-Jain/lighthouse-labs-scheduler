@@ -35,14 +35,14 @@ export default function useApplicationData(props) {
     };
 
     return axios.put(`/api/appointments/${id}`, {
-      interview
+     interview
     })
-    .then(() => {
+    .then((res) => {
       const days = updateSpots(state.day, appointments);
-      return setState({ ...state, appointments, days })
-     });
-  
+      return setState({ ...state, appointments , days});
+    })
   }
+
   function getDay(days, apptDay) {
     for(let day of days) {
       if(day.name === apptDay) {
@@ -50,14 +50,14 @@ export default function useApplicationData(props) {
       }
     }
   }
+  
   function updateSpots(apptDay, appointments) {
     const filteredDay = getDay(state.days, apptDay);
-    const appointmentIds = filteredDay.appointments; 
     let remainingSpots = 0;
     for (let appointmentId of filteredDay.appointments) {
-    if (appointments[appointmentId].interview === null) {
-      remainingSpots++;
-    }
+      if (appointments[appointmentId].interview === null) {
+        remainingSpots++;
+      }
     }
     filteredDay.spots = remainingSpots;
     const foundDayIndex = state.days.findIndex(day => day.id === filteredDay.id);
@@ -71,7 +71,7 @@ export default function useApplicationData(props) {
       [foundDayIndex]: day
     };
     
-    return days;
+    return (Object.values(days));
   }
 
   function cancelInterview(id, interview) {
